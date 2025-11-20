@@ -1,5 +1,7 @@
 temel komutların hepsinin sorunsuz çalıştığı ama gerçekten kullanmak isteyen birisinin üzerinde düzenleme yapması gerektiği discord public botu, web tabanlı çalışmakta.
 
+unutmayın yarım kalmış bir projedir kullanabilirsiniz
+
 
 `https://nodejs.org/en` indirip modülleri kurduğunuzda sorunsuz çalışıcaktır.
 
