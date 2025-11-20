@@ -1,5 +1,9 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
 
+
+//BU KOMUT DOSYASI SADECE SLASH TESTİ İÇİNDİR KULLANMAYABİLİRSİNİZ VEYA EKLEME YAPABİLİRSİNİZ
+
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('kayitsiz')
