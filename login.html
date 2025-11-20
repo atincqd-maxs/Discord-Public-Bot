@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #202225;
+            color: #dcddde;
+            overflow: hidden;
+        }
+        
+        #mouse-orb {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            /* Discord mavisi/moruna yakın bir radial gradient */
+            background: radial-gradient(circle, rgba(88, 101, 242, 0.25), rgba(88, 101, 242, 0) 70%);
+            border-radius: 50%;
+            /* İmlecin tam ortasında olması için */
+            transform: translate(-50%, -50%);
+            /* Üzerine tıklanabilmesini engelle (arkadaki elemanlara tıkla) */
+            pointer-events: none;
+            /* Formun arkasında durması için */
+            z-index: 0;
+            /* Sadece "md" (medium) ve üzeri ekranlarda (webde) göster */
+            display: none; /* Mobil için varsayılan */
+        }
+        @media (min-width: 768px) {
+            #mouse-orb {
+                display: block;
+            }
+        }
+
+        .form-wrapper {
+            /* Formun orb'un önünde kalması için */
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-container {
+            /* YENİ: Glassmorphism efekti için yarı şeffaf arka plan */
+            background-color: rgba(47, 49, 54, 0.75);
+            /* YENİ: Buzlu cam efekti */
+            backdrop-filter: blur(12px);
+            /* YENİ: Camın kenarlarını belli etmek için hafif bir border */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            /* YENİ: Giriş animasyonu */
+            animation: float-in 1s ease-out;
+        }
+        
+        .form-input {
+            background-color: #202225;
+            border: 1px solid #202225;
+            color: #dcddde;
+            transition: border-color 0.2s ease;
+        }
+        .form-input:focus {
+            border-color: #5865f2;
+            box-shadow: none;
+            outline: none;
+        }
+        .form-label {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .btn-primary {
+            background-color: #5865f2;
+            /* YENİ: Hover animasyonu için "all" */
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #4752c4;
+            /* YENİ: Butona hafif yükselme ve parlama efekti */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(88, 101, 242, 0.3);
+        }
+        .link-primary {
+            color: #5865f2;
+        }
+        .link-primary:hover {
+            text-decoration: underline;
+        }
+        #notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            transform: translateX(120%);
+            opacity: 0;
+        }
+        #notification-toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* YENİ: Formun giriş animasyonu */
+        @keyframes float-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- YENİ: Arka plan fare takip efekti -->
+    <div id="mouse-orb"></div>
+
+    <!-- Bildirim Alanı -->
+    <div id="notification-toast" class="p-4 rounded-lg shadow-lg text-white max-w-sm">
+        <p id="notification-message"></p>
+    </div>
+
+    <div class="w-full max-w-md form-wrapper">
+        <div class="form-container p-8">
+            
+            <!-- YENİ: Sunucu GIF'i -->
+            <img src="https://cdn.discordapp.com/icons/1418771807112265862/a_44f7b5418306af814dde1d7098347571.gif" 
+                 alt="Sunucu Logosu"
+                 class="w-24 h-24 rounded-full mx-auto mb-4">
+            
+            <h1 class="text-2xl font-bold text-center text-white mb-1">✦ M E B S U T A</h1>
+            <p class="text-center text-gray-400 mb-6">Yetkili Giriş Ekranı</p>
+            
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label for="username" class="form-label block mb-2">Kullanıcı Adı</label>
+                    <input type="text" id="username" name="username" class="form-input w-full p-3 rounded-md focus:ring-0" required>
+                </div>
+                
+                <div>
+                    <label for="password" class="form-label block mb-2">Şifre</label>
+                    <input type="password" id="password" name="password" class="form-input w-full p-3 rounded-md focus:ring-0" required>
+                </div>
+                
+                <button type="submit" id="login-button" class="btn-primary w-full text-white font-semibold p-3 rounded-md">
+                    Giriş Yap
+                </button>
+                
+                <div class="text-sm text-center">
+                    <span class="text-gray-400">Bir hesaba mı ihtiyacın var? </span>
+                    <a href="register.html" class="link-primary font-medium">Kayıt Ol</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orb = document.getElementById('mouse-orb');
+            if (orb) {
+                document.addEventListener('mousemove', (e) => {
+                    orb.style.left = e.clientX + 'px';
+                    orb.style.top = e.clientY + 'px';
+                });
+            }
+        });
+    </script>
+    <script src="web_js/auth.js"></script>
+</body>
+</html>
+
