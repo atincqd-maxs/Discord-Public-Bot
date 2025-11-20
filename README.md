@@ -3,9 +3,9 @@ temel komutların hepsinin sorunsuz çalıştığı ama gerçekten kullanmak ist
 unutmayın yarım kalmış bir projedir kullanabilirsiniz
 
 
-`https://nodejs.org/en` indirip modülleri kurduğunuzda sorunsuz çalışıcaktır.
+`https://nodejs.org/en` indirip modülleri kurduğunuzda sorunsuz çalışıcaktır
 
-
+DataBase için ``https://www.apachefriends.org/de/download.html`` Xampp, PHPMyAdmin kullanılmalı
 
 Komutlar
 <img width="1116" height="935" alt="image" src="https://github.com/user-attachments/assets/d14f2f86-8d09-4149-9b4a-86c456c90374" />
